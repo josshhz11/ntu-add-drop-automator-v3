@@ -1,0 +1,47 @@
+services:
+  # Spring Boot Backend
+  - type: web
+    name: ntu-add-drop-backend-v3
+    runtime: docker
+    repo: https://github.com/josshhz11/ntu-add-drop-automator-v3
+    branch: main
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    autoDeploy: true
+    env: docker
+    region: singapore
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SERVER_PORT
+        value: "10000"
+      - key: SPRING_REDIS_HOST
+        fromService:
+          type: redis
+          name: ntu-add-drop-redis-v3
+          property: host  
+      - key: SPRING_REDIS_PORT
+        fromService:
+          type: redis
+          name: ntu-add-drop-redis-v3
+          property: port
+      - key: SPRING_REDIS_PASSWORD
+        fromService:
+          type: redis
+          name: ntu-add-drop-redis-v3
+          property: password
+      - key: ENCRYPTION_KEY
+        value: "fE-vSqdUZZK-xWk4vDqmx9jwKfOqABllngKzijfKZuU="
+      - key: SELENIUM_HEADLESS
+        value: "true"
+      - key: CHROMEDRIVER_PATH
+        value: "/usr/local/bin/chromedriver"
+    healthCheckPath: /api/health
+    
+  # Redis Database  
+  - type: redis
+    name: ntu-add-drop-redis-v3
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
