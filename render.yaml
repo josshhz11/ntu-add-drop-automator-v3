@@ -1,5 +1,5 @@
 services:
-  # Spring Boot Backend
+  # Spring Boot Backend ONLY (no Redis creation)
   - type: web
     name: ntu-add-drop-backend-v3
     runtime: docker
@@ -16,27 +16,29 @@ services:
         value: production
       - key: SERVER_PORT
         value: "10000"
+        
+      # Use HARDCODED values from your .env (not fromService)
       - key: SPRING_REDIS_HOST
-        fromService:
-          type: redis
-          name: ntu-add-drop-redis-v2
-          property: host  
+        value: "red-d4bl51vdiees73alcfqg"
       - key: SPRING_REDIS_PORT
-        fromService:
-          type: redis
-          name: ntu-add-drop-redis-v2
-          property: port
+        value: "6379"
+        
       - key: ENCRYPTION_KEY
         value: "fE-vSqdUZZK-xWk4vDqmx9jwKfOqABllngKzijfKZuU="
       - key: SELENIUM_HEADLESS
         value: "true"
       - key: CHROMEDRIVER_PATH
         value: "/usr/local/bin/chromedriver"
+      - key: SELENIUM_TIMEOUT
+        value: "30"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://ntu-add-drop-automator.vercel.app,http://localhost:3000"
+      - key: SESSION_TIMEOUT
+        value: "7200"
+      - key: SESSION_CLEANUP_INTERVAL
+        value: "3600"
+      - key: LOGGING_LEVEL_COM_NTU_ADDDROP
+        value: "INFO"
+      - key: LOGGING_LEVEL_ROOT
+        value: "WARN"
     healthCheckPath: /api/health
-    
-  # Redis Database  
-  - type: redis
-    name: ntu-add-drop-redis-v3
-    plan: free
-    maxmemoryPolicy: allkeys-lru
-    ipAllowList: []
