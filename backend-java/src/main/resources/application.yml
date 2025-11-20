@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: ntu-adddrop-backend
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    timeout: 5s
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+
+  security:
+    user:
+      name: admin
+      password: temp # Replace this for proper security
+
+server:
+  port: ${PORT:8080} # Different port from FastAPI
+
+logging:
+  level:
+    com.ntu.adddrop: DEBUG
+    root: INFO
+
+# Custom properties matching FastAPI backend
+app:
+  encryption:
+    key: ${ENCRYPTION_KEY:your-32-character-encryption-key-here} # TO CHANGE
+  
+  selenium:
+    chrome:
+      binary-path: ${CHROME_BINARY_PATH:C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe}
+      driver-path: ${CHROMEDRIVER_PATH:C:\\Users\\joshua\\Downloads\\chromedriver-win64\\chromedriver.exe}
+
+    timeouts:
+      page-load: 30
+      implicit-wait: 10
+      explicit-wait: 20
+
+    options:
+      headless: ${SELENIUM_HEADLESS:false}
+      window-size: "1920,1080"
+      disable-gpu: true
+      no-sandbox: true
+      disable-dev-shm-usage: true
+
+    pool:
+      max-size: 3
+      initial-size: 1
+
+    urls:
+      ntu-login: "https://wish.wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main"
+      course-reg: "https://wish.wis.ntu.edu.sg/webexe/owa/aus_stars_planner.main"
