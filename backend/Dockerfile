@@ -26,14 +26,13 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearm
     && apt-get install -y --no-install-recommends google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
-# Install ChromeDriver (matching Chrome version)
+# Install ChromeDriver
 RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1-3) \
     && wget -O /tmp/chromedriver.zip "https://storage.googleapis.com/chrome-for-testing-public/${CHROME_VERSION}.0/linux64/chromedriver-linux64.zip" \
     && unzip /tmp/chromedriver.zip -d /tmp/ \
     && mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
-    && rm -rf /tmp/chromedriver* \
-    && chromedriver --version
+    && rm -rf /tmp/chromedriver*
 
 # Create app directory
 WORKDIR /app
@@ -58,11 +57,13 @@ ENV SPRING_PROFILES_ACTIVE=production
 ENV SELENIUM_HEADLESS=true
 ENV CHROMEDRIVER_PATH=/usr/local/bin/chromedriver
 
-EXPOSE 8080
+# ✅ CRITICAL: Use Render's port (10000) or environment variable
+ENV SERVER_PORT=${PORT:-10000}
+EXPOSE ${PORT:-10000}
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8080/api/health || exit 1
+    CMD curl -f http://localhost:${PORT:-10000}/api/health || exit 1
 
-# Run application
-CMD ["java", "-Djava.awt.headless=true", "-Dspring.profiles.active=production", "-jar", "target/adddrop-backend-0.0.1-SNAPSHOT.jar"]
+# ✅ CRITICAL: Start command for Spring Boot (no startCommand needed in render.yaml when using Docker)
+CMD ["sh", "-c", "java -Djava.awt.headless=true -Dserver.port=${PORT:-10000} -Dspring.profiles.active=production -jar target/adddrop-backend-0.0.1-SNAPSHOT.jar"]
