@@ -3,8 +3,8 @@ spring:
     name: ntu-adddrop-backend
 
   redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
+    host: ${SPRING_REDIS_HOST:localhost}
+    port: ${SPRING_REDIS_PORT:6379}
     timeout: 5s
     jedis:
       pool:
@@ -17,8 +17,11 @@ spring:
       name: admin
       password: temp # Replace this for proper security
 
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:development}
+
 server:
-  port: ${PORT:8080} # Different port from FastAPI
+  port: ${PORT:8080}
 
 logging:
   level:
