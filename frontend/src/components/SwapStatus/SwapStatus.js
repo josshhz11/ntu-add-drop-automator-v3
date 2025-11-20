@@ -224,7 +224,7 @@ const SwapStatus = () => {
                       Old Index
                     </Typography>
                     <Typography variant="body1" fontWeight="bold">
-                      {detail.old_index}
+                      {detail.oldIndex}
                     </Typography>
                   </Box>
                   
@@ -233,7 +233,7 @@ const SwapStatus = () => {
                       New Index
                     </Typography>
                     <Typography variant="body1" fontWeight="bold">
-                      {detail.new_indexes}
+                      {detail.newIndexes}
                     </Typography>
                   </Box>
                   
