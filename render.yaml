@@ -19,18 +19,13 @@ services:
       - key: SPRING_REDIS_HOST
         fromService:
           type: redis
-          name: ntu-add-drop-redis-v3
+          name: ntu-add-drop-redis-v2
           property: host  
       - key: SPRING_REDIS_PORT
         fromService:
           type: redis
-          name: ntu-add-drop-redis-v3
+          name: ntu-add-drop-redis-v2
           property: port
-      - key: SPRING_REDIS_PASSWORD
-        fromService:
-          type: redis
-          name: ntu-add-drop-redis-v3
-          property: password
       - key: ENCRYPTION_KEY
         value: "fE-vSqdUZZK-xWk4vDqmx9jwKfOqABllngKzijfKZuU="
       - key: SELENIUM_HEADLESS
