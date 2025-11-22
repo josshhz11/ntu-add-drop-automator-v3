@@ -6,7 +6,7 @@ This project is an automation tool designed for Nanyang Technological University
 
 Feel free to check out the [project here!](https://ntu-add-drop-automator.vercel.app/)
 
-<img width="1301" alt="NTU Add-Drop Automator Home Page" src="https://github.com/josshhz11/ntu-add-drop-automator-v3/assets/NTU-Add-Drop-Automator-Home-Page.png">
+<img width="1301" alt="NTU Add-Drop Automator Home Page" src="https://github.com/josshhz11/ntu-add-drop-automator-v3/blob/main/assets/NTU-Add-Drop-Automator-Home-Page.png">
 
 ## Features
 
