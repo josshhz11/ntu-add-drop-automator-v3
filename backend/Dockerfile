@@ -57,7 +57,7 @@ ENV SPRING_PROFILES_ACTIVE=production
 ENV SELENIUM_HEADLESS=true
 ENV CHROMEDRIVER_PATH=/usr/local/bin/chromedriver
 
-# ✅ CRITICAL: Use Render's port (10000) or environment variable
+# Use Render's port (10000) or environment variable
 ENV SERVER_PORT=${PORT:-10000}
 EXPOSE ${PORT:-10000}
 
@@ -65,5 +65,5 @@ EXPOSE ${PORT:-10000}
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:${PORT:-10000}/api/health || exit 1
 
-# ✅ CRITICAL: Start command for Spring Boot (no startCommand needed in render.yaml when using Docker)
+# Start command for Spring Boot (no startCommand needed in render.yaml when using Docker)
 CMD ["sh", "-c", "java -Djava.awt.headless=true -Dserver.port=${PORT:-10000} -Dspring.profiles.active=production -jar target/adddrop-backend-0.0.1-SNAPSHOT.jar"]
